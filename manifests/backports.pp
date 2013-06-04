@@ -1,3 +1,8 @@
+#
+# == Class: apt::backports
+#
+# Set backport source
+#
 class apt::backports {
 
   $debian_mirror = 'http://backports.debian.org/debian-backports'
