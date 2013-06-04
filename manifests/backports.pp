@@ -5,7 +5,11 @@
 #
 class apt::backports {
 
-  $debian_mirror = 'http://backports.debian.org/debian-backports'
+  $debian_mirror = "${::operatingsystem}${::lsbmajdistrelease}" ? {
+    /Debian(5|6)/ => 'http://backports.debian.org/debian-backports',
+    default       => 'http://ftp.debian.org/debian/',
+  }
+
   $ubuntu_mirror = 'http://archive.ubuntu.com/ubuntu'
 
   $uri = $::operatingsystem ? {
