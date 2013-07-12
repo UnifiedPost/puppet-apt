@@ -23,17 +23,20 @@ define apt::key (
       }
 
 
-      exec { "import gpg key ${name}":
+      exec { "apt::key-import gpg key ${name}":
         command => "${thekey} | apt-key add -",
         unless  => "apt-key list | grep -Fe '${name}' | grep -Fvqe 'expired:'",
         before  => Exec['apt-get_update'],
         notify  => Exec['apt-get_update'],
+        path    => ['/usr/bin','/bin'],
       }
     }
 
     absent: {
-      exec {"apt-key del ${name}":
+      # this doesnt actually do anything....
+      exec {"apt::key-del gpg key ${name}":
         onlyif => "apt-key list | grep -Fqe '${name}'",
+        path   => ['/usr/bin','/bin'],
       }
     }
 

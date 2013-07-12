@@ -49,9 +49,10 @@ class apt (
     source => 'puppet:///modules/apt/10periodic',
   }
 
-  exec {'apt-get_update':
+  exec {'apt::apt-get_update':
     command     => 'apt-get update',
     refreshonly => true,
+    path        => ['/usr/bin','/bin'],
   }
 
   # apt support preferences.d since version >= 0.7.22
