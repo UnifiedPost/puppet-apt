@@ -1,0 +1,11 @@
+<%
+  line = [@uri, @distribution, @components].flatten.join(' ')
+  types = ['deb']
+  if @deb_src
+    types << 'deb-src'
+  end
+
+  types.each do |type|
+-%>
+<%= type %> <%= line %>
+<% end -%>
