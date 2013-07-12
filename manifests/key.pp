@@ -1,9 +1,11 @@
 define apt::key (
-  $keyserver = 'pgp.mit.edu',
+  $keyserver = $::apt::keyserver,
   $ensure  = present,
   $source  = '',
   $content = ''
 ) {
+
+  include apt
 
   case $ensure {
 

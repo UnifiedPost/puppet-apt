@@ -3,6 +3,7 @@ class apt (
   $manage_sourceslist = $::apt::params::manage_sourceslist,
   $ignore_sourceslist = $::apt::params::ignore_sourceslist,
   $keyring_package    = $::apt::params::keyring_package,
+  $keyserver          = $::apt::params::keyserver,
   $clean_minutes      = $::apt::params::clean_minutes,
   $clean_hours        = $::apt::params::clean_hours,
   $clean_monthday     = $::apt::params::monthday,

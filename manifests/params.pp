@@ -1,5 +1,7 @@
 class apt::params {
 
+  # default keyserver.
+  $keyserver = 'pgp.mit.edu'
 
   $manage_preferences = true
   $manage_sourceslist = true
