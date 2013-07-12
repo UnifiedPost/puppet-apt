@@ -15,7 +15,7 @@ define apt::ppa (
       ppa
     end %>")
 
-  apt::sources_list {"${name}-${ppa_name}-${lsbdistcodename}":
+  apt::sources_list {"${name}-${ppa_name}-${::lsbdistcodename}":
     ensure  => $ensure,
     content => template('apt/ppa-list.erb'),
   }

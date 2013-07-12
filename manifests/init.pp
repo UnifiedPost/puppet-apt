@@ -1,6 +1,12 @@
-class apt {
-
-  include apt::params
+class apt (
+  $manage_preferences = $::apt::params::manage_preferences,
+  $manage_sourceslist = $::apt::params::manage_sourceslist,
+  $ignore_sourceslist = $::apt::params::ignore_sourceslist,
+  $keyring_package    = $::apt::params::keyring_package,
+  $clean_minutes      = $::apt::params::clean_minutes,
+  $clean_hours        = $::apt::params::clean_hours,
+  $clean_monthday     = $::apt::params::monthday,
+) inherits apt::params {
 
   Package {
     require => Exec['apt-get_update']
@@ -17,13 +23,13 @@ class apt {
       owner   => root,
       group   => root,
       mode    => '0755',
-      recurse => $apt::params::manage_preferences,
-      purge   => $apt::params::manage_preferences,
-      force   => $apt::params::manage_preferences,
+      recurse => $manage_preferences,
+      purge   => $manage_preferences,
+      force   => $manage_preferences,
     }
   }
 
-  package {$apt::params::keyring_package:
+  package {$keyring_package:
     ensure => present,
   }
 
@@ -31,10 +37,10 @@ class apt {
   file {'/etc/apt/sources.list.d':
     ensure  => directory,
     source  => 'puppet:///modules/apt/empty/',
-    recurse => $apt::params::manage_sourceslist,
-    purge   => $apt::params::manage_sourceslist,
-    force   => $apt::params::manage_sourceslist,
-    ignore  => $apt::params::ignore_sourceslist,
+    recurse => $manage_sourceslist,
+    purge   => $manage_sourceslist,
+    force   => $manage_sourceslist,
+    ignore  => $ignore_sourceslist,
   }
 
   apt::conf {'10periodic':

@@ -9,10 +9,12 @@
 #  *$monthday*:    cronjob monthday - default uses fqdn_rand(), range 1 to 29
 #
 class apt::clean (
-  $minutes = $apt::params::clean_minutes,
-  $hours = $apt::params::clean_hours,
-  $monthday = $apt::params::clean_monthday,
+  $minutes  = $apt::clean_minutes,
+  $hours    = $apt::clean_hours,
+  $monthday = $apt::clean_monthday,
 ) {
+  require apt
+
   cron {'cleanup APT cache - prevents diskfull':
     ensure   => present,
     command  => 'apt-get clean',
@@ -20,4 +22,5 @@ class apt::clean (
     minute   => $minutes,
     monthday => $monthday,
   }
+
 }
