@@ -2,11 +2,16 @@
 #
 # Create a cronjob which will run "apt-get clean" once a month.
 #
-# === Variables
+# === Parameters:
 #
-#  *$minutes*: cronjob minutes  - default uses fqdn_rand(), range 0 to 59
-#  *$hours*:   cronjob hours    - default to 0
-#  *$monthday*:    cronjob monthday - default uses fqdn_rand(), range 1 to 29
+#  [*$minutes*]:
+#     cronjob minutes  - default uses fqdn_rand(), range 0 to 59
+#
+#  [*$hours*]:
+#     cronjob hours    - default to 0
+#
+#  [*$monthday*]:
+#     cronjob monthday - default uses fqdn_rand(), range 1 to 29
 #
 class apt::clean (
   $minutes  = $apt::clean_minutes,
@@ -15,7 +20,7 @@ class apt::clean (
 ) {
   require apt
 
-  cron {'cleanup APT cache - prevents diskfull':
+  cron {'apt::clean-cleanup-APT-cache (prevents diskfull)':
     ensure   => present,
     command  => 'apt-get clean',
     hour     => $hours,
