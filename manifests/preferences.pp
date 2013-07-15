@@ -5,6 +5,8 @@ define apt::preferences(
   $package=$name,
 ) {
 
+  include apt::update
+
   $fname = regsubst($name, '\.| ', '-', 'G')
 
   # apt support preferences.d since version >= 0.7.22
@@ -15,8 +17,8 @@ define apt::preferences(
       group   => root,
       mode    => '0644',
       content => template('apt/preferences.erb'),
-      before  => Exec['apt-get_update'],
-      notify  => Exec['apt-get_update'],
+      before  => Exec['apt::apt-get_update'],
+      notify  => Exec['apt::apt-get_update'],
     }
   } else {
     concat::fragment {$fname:

@@ -13,7 +13,7 @@ define apt::sources_list (
   $keycontent   = undef,
 ) {
 
-  include apt
+  include apt::update
 
   if $key {
     if ! defined(Apt::Key[$key]) {
@@ -30,15 +30,15 @@ define apt::sources_list (
     file {$target:
       ensure  => $ensure,
       source  => $source,
-      before  => Exec['apt-get_update'],
-      notify  => Exec['apt-get_update'],
+      before  => Exec['apt::apt-get_update'],
+      notify  => Exec['apt::apt-get_update'],
     }
   } elsif $content {
     file {$target:
       ensure  => $ensure,
       content => $content,
-      before  => Exec['apt-get_update'],
-      notify  => Exec['apt-get_update'],
+      before  => Exec['apt::apt-get_update'],
+      notify  => Exec['apt::apt-get_update'],
     }
   }
   else {
@@ -49,8 +49,8 @@ define apt::sources_list (
     file {$target:
       ensure  => $ensure,
       content => template('apt/sources.list.erb'),
-      before  => Exec['apt-get_update'],
-      notify  => Exec['apt-get_update'],
+      before  => Exec['apt::apt-get_update'],
+      notify  => Exec['apt::apt-get_update'],
     }
   }
 

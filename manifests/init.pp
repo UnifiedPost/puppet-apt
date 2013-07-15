@@ -9,6 +9,8 @@ class apt (
   $clean_monthday     = $::apt::params::monthday,
 ) inherits apt::params {
 
+  include apt::update
+
   Package {
     require => Exec['apt-get_update']
   }
@@ -47,12 +49,6 @@ class apt (
   apt::conf {'10periodic':
     ensure => present,
     source => 'puppet:///modules/apt/10periodic',
-  }
-
-  exec {'apt::apt-get_update':
-    command     => 'apt-get update',
-    refreshonly => true,
-    path        => ['/usr/bin','/bin'],
   }
 
   # apt support preferences.d since version >= 0.7.22

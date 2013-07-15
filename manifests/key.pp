@@ -5,7 +5,7 @@ define apt::key (
   $content = ''
 ) {
 
-  include apt
+  include apt::update
 
   case $ensure {
 
@@ -26,8 +26,8 @@ define apt::key (
       exec { "apt::key-import gpg key ${name}":
         command => "${thekey} | apt-key add -",
         unless  => "apt-key list | grep -Fe '${name}' | grep -Fvqe 'expired:'",
-        before  => Exec['apt-get_update'],
-        notify  => Exec['apt-get_update'],
+        before  => Exec['apt::apt-get_update'],
+        notify  => Exec['apt::apt-get_update'],
         path    => ['/usr/bin','/bin'],
       }
     }
