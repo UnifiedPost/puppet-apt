@@ -6,6 +6,8 @@ define apt::conf($ensure, $content = false, $source = false) {
     file {"/etc/apt/apt.conf.d/${name}":
       ensure  => $ensure,
       content => $content,
+      owner   => 'root',
+      group   => 'root',
       before  => Exec['apt::apt-get_update'],
       notify  => Exec['apt::apt-get_update'],
     }
@@ -14,8 +16,10 @@ define apt::conf($ensure, $content = false, $source = false) {
   if $source {
     file {"/etc/apt/apt.conf.d/${name}":
       ensure => $ensure,
+      owner  => 'root',
+      group  => 'root',
       source => $source,
-      before  => Exec['apt::apt-get_update'],
+      before => Exec['apt::apt-get_update'],
       notify => Exec['apt::apt-get_update'],
     }
   }
