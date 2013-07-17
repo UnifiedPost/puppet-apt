@@ -12,7 +12,7 @@ class apt (
   include apt::update
 
   Package {
-    require => Exec['apt-get_update']
+    require => Exec['apt::apt-get_update']
   }
 
   # apt support preferences.d since version >= 0.7.22
